@@ -1,15 +1,12 @@
 //내 위치 정보
 let mylat, mylon;
 let mypos;
-let searchOption;
+
 //위치 정보 반환
 function success({ coords }) {
   mylat = coords.latitude; // 위도
   mylon = coords.longitude; // 경도
   mypos = new kakao.maps.LatLng(mylat, mylon);
-
-  //위치에 따른 중심 이동
-  map.setCenter(mypos);
 }
 
 //위치 정보 요청 처리
@@ -22,53 +19,39 @@ function getUserLocation() {
 
 //위치 정보 요청
 getUserLocation();
+// //검색 옵션 객체
+let searchOption;
+//getcurrentposition이 비동기+느림, settimeout이용
+setTimeout(function a() {
+  //위치에 따른 중심 이동
+  map.setCenter(mypos);
+  //검색 옵션 객체 생성
+  searchOption = {
+    location: mypos,
+    radius: 1000,
+    category_group_code: "FD6",
+    sort: kakao.maps.services.SortBy.ACCURACY,
+  };
+}, 1);
 
-// 마커를 담을 배열입니다
+// 마커를 담을 배열
 let markers = [];
 
-let mapContainer = document.getElementById("map"), // 지도를 표시할 div
+//지도 컨테이너
+let mapContainer = document.getElementById("map"),
   mapOption = {
     center: new kakao.maps.LatLng(33.450701, 126.570667),
     level: 3, // 지도의 확대 레벨
   };
 
-// 지도를 생성합니다
+// 지도를 생성
 let map = new kakao.maps.Map(mapContainer, mapOption);
 
-// 장소 검색 객체를 생성합니다
+// 장소 검색 객체
 let ps = new kakao.maps.services.Places();
-
-//getcurrentposition이 비동기+느림, settimeout이용
-setTimeout(
-  () =>
-    //검색 옵션 객체 생성
-    (searchOption = {
-      location: mypos,
-      radius: 1000,
-      category_group_code: "FD6",
-      sort: kakao.maps.services.SortBy.ACCURACY,
-    }),
-  1
-);
-
-//정확도 , 거리순 버튼
-let btn_acc = document.getElementById("btn_acc");
-btn_acc.addEventListener(
-  "click",
-  () => (searchOption.sort = kakao.maps.services.SortBy.ACCURACY)
-);
-
-let btn_dis = document.getElementById("btn_dis");
-btn_dis.addEventListener(
-  "click",
-  () => (searchOption.sort = kakao.maps.services.SortBy.DISTANCE)
-);
 
 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
-
-// 키워드로 장소를 검색합니다
-searchPlaces();
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
@@ -181,8 +164,20 @@ function getListItem(index, places) {
     itemStr += "    <span>" + places.address_name + "</span>";
   }
 
-  itemStr += '  <span class="tel">' + places.phone + "</span>" + "</div>";
+  itemStr += '  <span class="tel">' + places.phone + "</span>";
 
+  itemStr +=
+    "   <span class='url'>" +
+    "<a href=" +
+    "'" +
+    places.place_url +
+    "'" +
+    " target='_blank'" +
+    ">" +
+    "상세정보" +
+    "</a>" +
+    "</span>" +
+    "</div>";
   el.innerHTML = itemStr;
   el.className = "item";
 
@@ -253,7 +248,12 @@ function displayPagination(pagination) {
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 // 인포윈도우에 장소명을 표시합니다
 function displayInfowindow(marker, title) {
-  let content = '<div style="padding:5px;z-index:1;">' + title + "</div>";
+  let content =
+    '<div style="padding:5px;z-index:1;">' +
+    '<a href="">' +
+    title +
+    "</a>" +
+    "</div>";
 
   infowindow.setContent(content);
   infowindow.open(map, marker);
@@ -265,3 +265,16 @@ function removeAllChildNods(el) {
     el.removeChild(el.lastChild);
   }
 }
+
+//정확도 , 거리순 버튼
+let btn_acc = document.getElementById("btn_acc");
+btn_acc.addEventListener(
+  "click",
+  () => (searchOption.sort = kakao.maps.services.SortBy.ACCURACY)
+);
+
+let btn_dis = document.getElementById("btn_dis");
+btn_dis.addEventListener(
+  "click",
+  () => (searchOption.sort = kakao.maps.services.SortBy.DISTANCE)
+);
