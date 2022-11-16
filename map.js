@@ -1,7 +1,15 @@
 //내 위치 정보
 let mylat, mylon;
 let mypos;
-
+//개발자 추천
+let dev_res = [
+  "청교옥",
+  "온달네",
+  "오늘의 파스타",
+  "리틀 파스타",
+  "몽키 파스타",
+  "",
+];
 //위치 정보 반환
 function success({ coords }) {
   mylat = coords.latitude; // 위도
