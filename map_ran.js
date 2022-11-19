@@ -2,6 +2,25 @@
 let mylat, mylon;
 let mypos;
 //개발자 추천
+let restaurant = {
+  한식: [
+    "사나이뚝배기",
+    "소문날라",
+    "홍가부대찌개",
+    "이정림수제햄부대찌개",
+    "김치만센세",
+    "청교옥",
+    "황태칼국수왕돈가스",
+    "아이엠돈까스",
+    "내찜닭",
+    "소문날라",
+    "왕십리곱창",
+    "부어치킨",
+  ],
+  양식: ["핏짜굽는언니"],
+  일식: ["기린라멘", "중국집", "왕짜장"],
+  분식: ["동대문엽기떡볶이", "쪼매", "멍텅구리"],
+};
 let frt_sch = ["맥도날드", "핏짜굽는언니", "아이엠돈까스", "쉐프의 그릴"];
 // let dev_res = [
 //   "청교옥",
@@ -83,8 +102,14 @@ let ps = new kakao.maps.services.Places();
 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 //랜덤 장소 요청
-function ranPlace() {
-  let keyword = frt_sch[Math.floor(Math.random() * frt_sch.length)];
+function ranPlace(event) {
+  let keyword;
+  let id = event.target.id;
+  switch (id) {
+  }
+  if (event.target.id == "btn_ran") {
+    keyword = frt_sch[Math.floor(Math.random() * frt_sch.length)];
+  }
   ps.keywordSearch(keyword, placesSearchRD, searchOption);
 }
 function placesSearchRD(data, status, pagination) {
