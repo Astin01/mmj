@@ -14,14 +14,56 @@ let restaurant = {
     "아이엠돈까스",
     "내찜닭",
     "소문날라",
-    "왕십리곱창",
-    "부어치킨",
+    "공릉순두부",
+    "한양식당",
+    "더진국",
+    "무봉리",
+    "공릉우동집",
+    "소문난기사식당",
+    "마인하우스",
+    "수돈재",
+    "굴다리전주",
+    "밥은",
+    "온달네",
+    "숲속왕돈까스",
+    "비젼식당",
+    "봉평산골메밀촌",
   ],
-  양식: ["핏짜굽는언니"],
-  일식: ["기린라멘", "중국집", "왕짜장"],
+  양식: [
+    "핏짜굽는언니",
+    "리틀파스타",
+    "오늘의파스타",
+    "몽키파스타",
+    "피자마루 ",
+    "피자스쿨 ",
+    "이삭 ",
+    "맥도날드",
+    "맛닭꼬 ",
+    "호치킨 ",
+    "버거투버거",
+    "플렉스 ",
+    "서브웨이",
+    "루이스버거",
+    "서오롱피자",
+    "오븐에빠진닭",
+    "맘스터치",
+    "이삭토스트",
+  ],
+  일식: [
+    "기린라멘",
+    "스시쟁이",
+    "도쿄식탁",
+    "네코정",
+    "개기일식",
+    "경성초밥",
+    "로지스시",
+    "개기일식",
+  ],
   분식: ["동대문엽기떡볶이", "쪼매", "멍텅구리"],
+  고기집: ["세겹", "궁안뜰", "찬이네곱창", "화로상회", "서울껍데기"],
+  중식: ["중국집", "왕짜장", "뽕신"],
 };
-let frt_sch = ["맥도날드", "핏짜굽는언니", "아이엠돈까스", "쉐프의 그릴"];
+
 // let dev_res = [
 //   "청교옥",
 //   "온달네",
@@ -106,10 +148,32 @@ function ranPlace(event) {
   let keyword;
   let id = event.target.id;
   switch (id) {
+    case "btn_ko":
+      keyword =
+        restaurant.한식[Math.floor(Math.random() * restaurant.한식.length)];
+      break;
+    case "btn_jp":
+      keyword =
+        restaurant.일식[Math.floor(Math.random() * restaurant.일식.length)];
+      break;
+    case "btn_ch":
+      keyword =
+        restaurant.중식[Math.floor(Math.random() * restaurant.중식.length)];
+      break;
+    case "btn_eu":
+      keyword =
+        restaurant.양식[Math.floor(Math.random() * restaurant.양식.length)];
+      break;
+    case "btn_ttk":
+      keyword =
+        restaurant.분식[Math.floor(Math.random() * restaurant.분식.length)];
+      break;
+    case "btn_meat":
+      keyword =
+        restaurant.고기집[Math.floor(Math.random() * restaurant.고기집.length)];
+      break;
   }
-  if (event.target.id == "btn_ran") {
-    keyword = frt_sch[Math.floor(Math.random() * frt_sch.length)];
-  }
+  keyword += "공릉";
   ps.keywordSearch(keyword, placesSearchRD, searchOption);
 }
 function placesSearchRD(data, status, pagination) {
@@ -438,5 +502,20 @@ btn_dis.addEventListener(
   () => (searchOption.sort = kakao.maps.services.SortBy.DISTANCE)
 );
 
-let btn_ran = document.getElementById("btn_ran");
-btn_ran.addEventListener("click", ranPlace);
+let btn_ko = document.getElementById("btn_ko");
+btn_ko.addEventListener("click", ranPlace);
+
+let btn_jp = document.getElementById("btn_jp");
+btn_jp.addEventListener("click", ranPlace);
+
+let btn_ch = document.getElementById("btn_ch");
+btn_ch.addEventListener("click", ranPlace);
+
+let btn_eu = document.getElementById("btn_eu");
+btn_eu.addEventListener("click", ranPlace);
+
+let btn_ttk = document.getElementById("btn_ttk");
+btn_ttk.addEventListener("click", ranPlace);
+
+let btn_meat = document.getElementById("btn_meat");
+btn_meat.addEventListener("click", ranPlace);
