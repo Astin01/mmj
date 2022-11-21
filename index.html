@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>머먹지</title>
     <link rel="stylesheet" href="index.css" />
   </head>
@@ -24,11 +25,10 @@
         <div class="option">
           <div>
             <form onsubmit="searchPlaces(); return false;">
-              키워드 :
               <input
                 type="text"
                 value=""
-                placeholder="장소, 음식 검색"
+                placeholder=" 장소, 음식 검색"
                 id="keyword"
                 size="15"
               />
@@ -44,7 +44,7 @@
             <button id="btn_meat">고기</button>
           </div>
         </div>
-        <hr />
+
         <ul id="placesList"></ul>
         <div id="pagination"></div>
       </div>
