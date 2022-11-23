@@ -94,7 +94,7 @@ setTimeout(function a() {
     category_group_code: "FD6",
     sort: kakao.maps.services.SortBy.ACCURACY,
   };
-}, 1);
+}, 100);
 
 // 마커를 담을 배열
 let markers = [];
@@ -190,23 +190,23 @@ function displayRdPlaces(places) {
     // 마커와 검색결과 항목에 mouseover 했을때
     // 해당 장소에 인포윈도우에 장소명을 표시합니다
     // mouseout 했을 때는 인포윈도우를 닫습니다
-    (function (marker, title) {
-      kakao.maps.event.addListener(marker, "mouseover", function () {
-        displayInfowindow(marker, title);
+    (function (marker, title, places, map) {
+      kakao.maps.event.addListener(marker, "click", function () {
+        displayInfowindow(marker, title, places);
       });
 
-      kakao.maps.event.addListener(marker, "mouseout", function () {
+      kakao.maps.event.addListener(map, "click", function () {
         infowindow.close();
       });
 
       itemEl.onmouseover = function () {
-        displayInfowindow(marker, title);
+        displayInfowindow(marker, title, places);
       };
 
       itemEl.onmouseout = function () {
         infowindow.close();
       };
-    })(marker, places[i].place_name);
+    })(marker, places[i].place_name, places[i], map);
 
     fragment.appendChild(itemEl);
   }
@@ -441,13 +441,35 @@ function displayPagination(pagination) {
 
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 // 인포윈도우에 장소명을 표시합니다
-function displayInfowindow(marker, title) {
+function displayInfowindow(marker, title, places) {
   let content =
-    '<div style="padding:5px;z-index:1;">' +
+    '<div style="padding:5px;z-index:10;">' +
     '<a href="">' +
     title +
     "</a>" +
     "</div>";
+  if (places.road_address_name) {
+    content += "    <div>" + places.road_address_name + "</div>";
+  } else {
+    content += "    <div>" + places.address_name + "</div>";
+  }
+
+  content += '  <div class="tel">' + places.phone + "</div>";
+
+  content +=
+    "   <div class='url'>" +
+    "<a href=" +
+    "'" +
+    places.place_url +
+    "'" +
+    " target='_blank'" +
+    ">" +
+    "상세정보" +
+    "</a>" +
+    "</div>" +
+    "</div>";
+  // el.innerHTML = content;
+  // el.className = "item";
 
   infowindow.setContent(content);
   infowindow.open(map, marker);
