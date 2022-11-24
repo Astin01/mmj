@@ -69,23 +69,7 @@ function success({ coords }) {
   mylat = coords.latitude; // 위도
   mylon = coords.longitude; // 경도
   mypos = new kakao.maps.LatLng(mylat, mylon);
-}
 
-//위치 정보 요청 처리
-function getUserLocation() {
-  if (!navigator.geolocation) {
-    throw "위치 정보가 지원되지 않습니다.";
-  }
-  navigator.geolocation.getCurrentPosition(success);
-}
-
-//위치 정보 요청
-getUserLocation();
-// //검색 옵션 객체
-let searchOption;
-//getcurrentposition이 비동기+느림, settimeout이용
-setTimeout(function a() {
-  //위치에 따른 중심 이동
   map.setCenter(mypos);
   //검색 옵션 객체 생성
   searchOption = {
@@ -94,7 +78,20 @@ setTimeout(function a() {
     category_group_code: "FD6",
     sort: kakao.maps.services.SortBy.ACCURACY,
   };
-}, 100);
+}
+
+//위치 정보 요청 처리
+function getUserLocation() {
+  if (!navigator.geolocation) {
+    throw "위치 정보가 지원되지 않습니다.";
+  }
+  pos = navigator.geolocation.getCurrentPosition(success);
+}
+
+//위치 정보 요청
+getUserLocation();
+// //검색 옵션 객체
+let searchOption;
 
 // 마커를 담을 배열
 let markers = [];
@@ -442,16 +439,14 @@ function displayPagination(pagination) {
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 // 인포윈도우에 장소명을 표시합니다
 function displayInfowindow(marker, title, places) {
+  let el = document.createElement("div");
   let content =
-    '<div style="padding:5px;z-index:10;">' +
-    '<a href="">' +
-    title +
-    "</a>" +
-    "</div>";
+    '<div style="z-index:20;">' + '<a href="">' + title + "</a>" + "</div>";
   if (places.road_address_name) {
-    content += "    <div>" + places.road_address_name + "</div>";
+    content +=
+      "    <div class='road_name'>" + places.road_address_name + "</div>";
   } else {
-    content += "    <div>" + places.address_name + "</div>";
+    content += "    <div class='road_name'>" + places.address_name + "</div>";
   }
 
   content += '  <div class="tel">' + places.phone + "</div>";
@@ -468,10 +463,10 @@ function displayInfowindow(marker, title, places) {
     "</a>" +
     "</div>" +
     "</div>";
-  // el.innerHTML = content;
-  // el.className = "item";
+  el.innerHTML = content;
+  el.id = "info_win";
 
-  infowindow.setContent(content);
+  infowindow.setContent(el);
   infowindow.open(map, marker);
 }
 
