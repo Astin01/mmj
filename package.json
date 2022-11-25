@@ -1,0 +1,20 @@
+{
+  "name": "meowmeokji",
+  "version": "1.0.0",
+  "description": "",
+  "main": "map.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Astin01/mmji.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Astin01/mmji/issues"
+  },
+  "homepage": "https://github.com/Astin01/mmji#readme"
+}
