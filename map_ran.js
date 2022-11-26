@@ -8,16 +8,16 @@ let restaurant = {
     "소문날라",
     "홍가부대찌개",
     "이정림수제햄부대찌개",
-    "김치만센세",
+    "김치만선생",
     "청교옥",
     "황태칼국수왕돈가스",
     "아이엠돈까스",
     "내찜닭",
     "소문날라",
     "공릉순두부",
-    "한양식당",
+    "광주한양식당",
     "더진국",
-    "무봉리",
+    "무봉리토종순대국",
     "공릉우동집",
     "소문난기사식당",
     "마인하우스",
@@ -27,21 +27,20 @@ let restaurant = {
     "온달네",
     "숲속왕돈까스",
     "비젼식당",
-    "봉평산골메밀촌",
+    "원조강영숙봉평메밀촌",
   ],
   양식: [
     "핏짜굽는언니",
     "리틀파스타",
     "오늘의파스타",
-    "몽키파스타",
+    "오렌지몽키파스타",
     "피자마루 ",
     "피자스쿨 ",
-    "이삭 ",
     "맥도날드",
-    "맛닭꼬 ",
-    "호치킨 ",
+    "맛닭꼬",
+    "호치킨",
     "버거투버거",
-    "플렉스 ",
+    "플렉스",
     "서브웨이",
     "루이스버거",
     "서오롱피자",
@@ -50,18 +49,17 @@ let restaurant = {
     "이삭토스트",
   ],
   일식: [
-    "기린라멘",
+    "기린",
     "스시쟁이",
     "도쿄식탁",
     "네코정",
     "개기일식",
     "경성초밥",
     "로지스시",
-    "개기일식",
   ],
   분식: ["동대문엽기떡볶이", "쪼매", "멍텅구리"],
   고기집: ["세겹", "궁안뜰", "찬이네곱창", "화로상회", "서울껍데기"],
-  중식: ["중국집", "왕짜장", "뽕신"],
+  중식: ["왕짜장", "뽕신"],
 };
 
 //위치 정보 반환
@@ -149,9 +147,6 @@ function placesSearchRD(data, status, pagination) {
     // 정상적으로 검색이 완료됐으면
     // 검색 목록과 마커를 표출합니다
     displayRdPlaces(data);
-
-    // 페이지 번호를 표출합니다
-    displayRdPagination(pagination);
   } else if (status === kakao.maps.services.Status.ZERO_RESULT) {
     alert("검색 결과가 존재하지 않습니다.");
     return;
@@ -165,7 +160,12 @@ function displayRdPlaces(places) {
     menuEl = document.getElementById("menu_wrap"),
     fragment = document.createDocumentFragment(),
     bounds = new kakao.maps.LatLngBounds(),
-    listStr = "";
+    listStr = "",
+    paginationEl = document.getElementById("pagination");
+
+  while (paginationEl.hasChildNodes()) {
+    paginationEl.removeChild(paginationEl.lastChild);
+  }
 
   // 검색 결과 목록에 추가된 항목들을 제거합니다
   removeAllChildNods(listEl);
@@ -215,35 +215,7 @@ function displayRdPlaces(places) {
   // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
   map.setBounds(bounds);
 }
-function displayRdPagination(pagination) {
-  let paginationEl = document.getElementById("pagination"),
-    fragment = document.createDocumentFragment(),
-    i;
 
-  // 기존에 추가된 페이지번호를 삭제합니다
-  while (paginationEl.hasChildNodes()) {
-    paginationEl.removeChild(paginationEl.lastChild);
-  }
-
-  for (i = 1; i <= 2; i++) {
-    let el = document.createElement("a");
-    el.href = "#";
-    el.innerHTML = i;
-
-    if (i === pagination.current) {
-      el.className = "on";
-    } else {
-      el.onclick = (function (i) {
-        return function () {
-          pagination.gotoPage(i);
-        };
-      })(i);
-    }
-
-    fragment.appendChild(el);
-  }
-  paginationEl.appendChild(fragment);
-}
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
   let keyword = document.getElementById("keyword").value;
