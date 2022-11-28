@@ -113,6 +113,13 @@ let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 function ranPlace(event) {
   let keyword;
   let id = event.target.id;
+  btn_ko.style.backgroundColor = "#ffa356";
+  btn_jp.style.backgroundColor = "#ffa356";
+  btn_ch.style.backgroundColor = "#ffa356";
+  btn_eu.style.backgroundColor = "#ffa356";
+  btn_meat.style.backgroundColor = "#ffa356";
+  btn_ttk.style.backgroundColor = "#ffa356";
+  document.getElementById(id).style.backgroundColor = "#d86200";
   switch (id) {
     case "btn_ko":
       keyword =
@@ -451,16 +458,20 @@ function removeAllChildNods(el) {
 
 //정확도 , 거리순 버튼
 let btn_acc = document.getElementById("btn_acc");
-btn_acc.addEventListener(
-  "click",
-  () => (searchOption.sort = kakao.maps.services.SortBy.ACCURACY)
-);
+btn_acc.addEventListener("click", function a() {
+  searchOption.sort = kakao.maps.services.SortBy.ACCURACY;
+  btn_dis.style.backgroundColor = "#ffa356";
+  btn_acc.style.backgroundColor = "#d86200";
+  searchPlaces();
+});
 
 let btn_dis = document.getElementById("btn_dis");
-btn_dis.addEventListener(
-  "click",
-  () => (searchOption.sort = kakao.maps.services.SortBy.DISTANCE)
-);
+btn_dis.addEventListener("click", function a() {
+  searchOption.sort = kakao.maps.services.SortBy.DISTANCE;
+  btn_acc.style.backgroundColor = "#ffa356";
+  btn_dis.style.backgroundColor = "#d86200";
+  searchPlaces();
+});
 
 let btn_ko = document.getElementById("btn_ko");
 btn_ko.addEventListener("click", ranPlace);

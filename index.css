@@ -27,12 +27,14 @@ body {
   margin: 10px 10px 10px 10px;
   /* margin: 10px 0 30px 10px; */
   width: 250px;
-  padding: 5px;
-  overflow-y: auto;
   /* background: rgba(255, 255, 255, 0.7); */
+  overflow-y: auto;
   z-index: 1;
   font-size: 12px;
-  border-radius: 10px;
+  border-radius: 3px;
+}
+#menu_wrap::-webkit-scrollbar {
+  display: none;
 }
 .bg_white {
   background: #fff;
@@ -167,11 +169,16 @@ body {
 }
 
 #menu_wrap #keyword {
-  height: 30px;
+  border-radius: 3px;
+  border-color: transparent;
+  width: 220px;
+  height: 25px;
+  outline: none;
 }
 
 .option {
   background-color: #ffa356;
+  padding: 7px;
 }
 #logo_bar {
   display: flex;
@@ -184,4 +191,53 @@ body {
   background-color: #ffa356;
   border: none;
   text-decoration: none;
+}
+#btn_acc,
+#btn_dis {
+  padding: 5px;
+  border-radius: 3px;
+  padding-top: 3px;
+  border-color: transparent;
+}
+
+.option #logo {
+  padding-left: 17px;
+  font-size: 20px;
+  padding-bottom: 5px;
+}
+
+.option form {
+  text-align: center;
+}
+
+#logo_bar div {
+  display: flex;
+  align-items: center;
+}
+
+.option #ran_btt {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 15px;
+  padding-bottom: 8px;
+}
+.option #ran_btt > button {
+  color: white;
+  background-color: #ffa356;
+  border: none;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 3px;
+  border-color: transparent;
+}
+
+#btn_acc:hover,
+#btn_dis:hover,
+#btn_ch:hover,
+#btn_eu:hover,
+#btn_jp:hover,
+#btn_ko:hover,
+#btn_meat:hover,
+#btn_ttk:hover {
+  cursor: pointer;
 }
