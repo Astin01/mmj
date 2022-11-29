@@ -109,6 +109,9 @@ let ps = new kakao.maps.services.Places();
 
 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+// 커스텀 오버레이
+let overlay_option;
+let customOverlay = new kakao.maps.CustomOverlay(overlay_option);
 //랜덤 장소 요청
 function ranPlace(event) {
   let keyword;
@@ -194,23 +197,25 @@ function displayRdPlaces(places) {
     // 마커와 검색결과 항목에 mouseover 했을때
     // 해당 장소에 인포윈도우에 장소명을 표시합니다
     // mouseout 했을 때는 인포윈도우를 닫습니다
-    (function (marker, title, places, map) {
+    (function (marker, title, places, map, placePosition) {
+      // kakao.maps.event.addListener(marker, "click", function () {
+      //   displayInfowindow(marker, title, places);
+      // });
       kakao.maps.event.addListener(marker, "click", function () {
-        displayInfowindow(marker, title, places);
+        displayCustomOverlay(marker, title, places, placePosition);
       });
-
       kakao.maps.event.addListener(map, "click", function () {
-        infowindow.close();
+        customOverlay.setMap(null);
       });
 
       itemEl.onmouseover = function () {
-        displayInfowindow(marker, title, places);
+        displayCustomOverlay(marker, title, places);
       };
 
       itemEl.onmouseout = function () {
-        infowindow.close();
+        customOverlay.setMap(null);
       };
-    })(marker, places[i].place_name, places[i], map);
+    })(marker, places[i].place_name, places[i], map, placePosition);
 
     fragment.appendChild(itemEl);
   }
@@ -417,18 +422,54 @@ function displayPagination(pagination) {
 
 // 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
 // 인포윈도우에 장소명을 표시합니다
-function displayInfowindow(marker, title, places) {
+// function displayInfowindow(marker, title, places) {
+//   let el = document.createElement("div");
+//   let content =
+//     '<div style="z-index:20;">' + '<a href="">' + title + "</a>" + "</div>";
+//   if (places.road_address_name) {
+//     content +=
+//       "    <div class='road_name'>" + places.road_address_name + "</div>";
+//   } else {
+//     content += "    <div class='road_name'>" + places.address_name + "</div>";
+//   }
+
+//   content += '  <div class="tel">' + places.phone + "</div>";
+
+//   content +=
+//     "   <div class='url'>" +
+//     "<a href=" +
+//     "'" +
+//     places.place_url +
+//     "'" +
+//     " target='_blank'" +
+//     ">" +
+//     "상세정보" +
+//     "</a>" +
+//     "</div>" +
+//     "</div>";
+//   el.innerHTML = content;
+//   el.id = "info_win";
+
+//   infowindow.setContent(el);
+//   infowindow.open(map, marker);
+// }
+function displayCustomOverlay(marker, title, places) {
+  let overlay;
   let el = document.createElement("div");
-  let content =
-    '<div style="z-index:20;">' + '<a href="">' + title + "</a>" + "</div>";
+  let cus_cont = document.createElement("div");
+  let cus_logo = document.createElement("div");
+  let tri_overlay;
+  let tri = document.createElement("div");
+  el.append(cus_cont, cus_logo);
+  let content = "<div id='title'>" + title + "</div>";
   if (places.road_address_name) {
     content +=
       "    <div class='road_name'>" + places.road_address_name + "</div>";
   } else {
     content += "    <div class='road_name'>" + places.address_name + "</div>";
   }
-
-  content += '  <div class="tel">' + places.phone + "</div>";
+  if (places.phone === "") content += '  <div class="tel">전화번호 없음</div>';
+  else content += '  <div class="tel">' + places.phone + "</div>";
 
   content +=
     "   <div class='url'>" +
@@ -442,11 +483,29 @@ function displayInfowindow(marker, title, places) {
     "</a>" +
     "</div>" +
     "</div>";
-  el.innerHTML = content;
+  cus_cont.innerHTML = content;
   el.id = "info_win";
-
-  infowindow.setContent(el);
-  infowindow.open(map, marker);
+  cus_cont.className = "cus_cont";
+  cus_logo.id = "cus_logo";
+  cus_logo.innerHTML =
+    '<span class="material-symbols-outlined">restaurant</span>';
+  tri.id = "tri";
+  overlay = new kakao.maps.CustomOverlay({
+    map: map,
+    position: marker.getPosition(),
+    content: el,
+    xAnchor: 0.5,
+    yAnchor: 1,
+  });
+  tri_overlay = new kakao.maps.CustomOverlay({
+    map: map,
+    position: marker.getPosition(),
+    content: tri,
+    xAnchor: 0,
+    yAnchor: 1,
+  });
+  overlay.setMap(map);
+  tri_overlay.setMap(map);
 }
 
 // 검색결과 목록의 자식 Element를 제거하는 함수입니다
