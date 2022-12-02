@@ -36,17 +36,13 @@ let restaurant = {
     "오렌지몽키파스타",
     "피자마루 ",
     "피자스쿨 ",
-    "맥도날드",
     "맛닭꼬",
     "호치킨",
     "버거투버거",
     "플렉스",
-    "서브웨이",
     "루이스버거",
     "서오롱피자",
     "오븐에빠진닭",
-    "맘스터치",
-    "이삭토스트",
   ],
   일식: [
     "기린",
@@ -110,8 +106,8 @@ let ps = new kakao.maps.services.Places();
 // 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
 let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 // 커스텀 오버레이
-let customOverlay;
-let triOverlay;
+let customOverlay = new kakao.maps.CustomOverlay(null);
+let triOverlay = new kakao.maps.CustomOverlay(null);
 //랜덤 장소 요청
 function ranPlace(event) {
   let keyword;
@@ -172,8 +168,10 @@ function displayRdPlaces(places) {
     bounds = new kakao.maps.LatLngBounds(),
     listStr = "",
     paginationEl = document.getElementById("pagination");
+
   customOverlay.setMap(null);
   triOverlay.setMap(null);
+
   while (paginationEl.hasChildNodes()) {
     paginationEl.removeChild(paginationEl.lastChild);
   }
@@ -199,15 +197,8 @@ function displayRdPlaces(places) {
     // 해당 장소에 인포윈도우에 장소명을 표시합니다
     // mouseout 했을 때는 인포윈도우를 닫습니다
     (function (marker, title, places, map) {
-      // kakao.maps.event.addListener(marker, "click", function () {
-      //   displayInfowindow(marker, title, places);
-      // });
       kakao.maps.event.addListener(marker, "click", function () {
         displayCustomOverlay(marker, title, places);
-      });
-      kakao.maps.event.addListener(map, "click", function () {
-        customOverlay.setMap(null);
-        triOverlay.setMap(null);
       });
 
       itemEl.onmouseover = function () {
@@ -215,8 +206,7 @@ function displayRdPlaces(places) {
       };
 
       itemEl.onmouseout = function () {
-        customOverlay.setMap(null);
-        triOverlay.setMap(null);
+        closeOverlay();
       };
     })(marker, places[i].place_name, places[i], map, placePosition);
 
@@ -289,23 +279,19 @@ function displayPlaces(places) {
     // 마커와 검색결과 항목에 mouseover 했을때
     // 해당 장소에 인포윈도우에 장소명을 표시합니다
     // mouseout 했을 때는 인포윈도우를 닫습니다
-    (function (marker, title) {
-      kakao.maps.event.addListener(marker, "mouseover", function () {
-        displayInfowindow(marker, title);
-      });
-
-      kakao.maps.event.addListener(marker, "mouseout", function () {
-        infowindow.close();
+    (function (marker, title, places) {
+      kakao.maps.event.addListener(marker, "click", function () {
+        displayCustomOverlay(marker, title, places);
       });
 
       itemEl.onmouseover = function () {
-        displayInfowindow(marker, title);
+        displayCustomOverlay(marker, title, places);
       };
 
       itemEl.onmouseout = function () {
-        infowindow.close();
+        closeOverlay();
       };
-    })(marker, places[i].place_name);
+    })(marker, places[i].place_name, places[i]);
 
     fragment.appendChild(itemEl);
   }
@@ -324,7 +310,9 @@ function getListItem(index, places) {
     itemStr =
       '<span class="markerbg marker_' +
       (index + 1) +
-      '"></span>' +
+      '">' +
+      (index + 1) +
+      "</span>" +
       '<div class="info">' +
       "   <h5>" +
       places.place_name +
@@ -364,13 +352,12 @@ function getListItem(index, places) {
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, title) {
-  let imageSrc =
-      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
-    imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
+  let imageSrc = "https://ifh.cc/g/w72QOf.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+    imageSize = new kakao.maps.Size(31, 35), // 마커 이미지의 크기
     imgOptions = {
-      spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-      spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-      offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+      // spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+      // spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+      offset: new kakao.maps.Point(16, 34), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
     },
     markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
     marker = new kakao.maps.Marker({
@@ -490,7 +477,7 @@ function displayCustomOverlay(marker, title, places) {
   cus_cont.className = "cus_cont";
   cus_logo.id = "cus_logo";
   cus_logo.innerHTML =
-    '<span class="material-symbols-outlined">restaurant</span>';
+    '<span class="material-symbols-outlined" onclick="closeOverlay()">restaurant</span>';
   tri.id = "tri";
   customOverlay = new kakao.maps.CustomOverlay({
     map: map,
@@ -551,3 +538,8 @@ btn_ttk.addEventListener("click", ranPlace);
 
 let btn_meat = document.getElementById("btn_meat");
 btn_meat.addEventListener("click", ranPlace);
+
+function closeOverlay() {
+  customOverlay.setMap(null);
+  triOverlay.setMap(null);
+}

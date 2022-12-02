@@ -81,13 +81,15 @@ body {
     no-repeat;
 }
 #placesList .item .markerbg {
-  float: left;
   position: absolute;
-  width: 36px;
-  height: 37px;
-  margin: 10px 0 0 10px;
-  background: url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
-    no-repeat;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  margin-left: 17px;
+  font-size: 40px;
+  color: #ffa356;
+  font-family: "Roboto", sans-serif;
+  bottom: 7vh;
 }
 #placesList .item .marker_1 {
   background-position: 0 -10px;
