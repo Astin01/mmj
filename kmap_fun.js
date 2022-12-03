@@ -1,7 +1,7 @@
 //내 위치 정보
 let mylat, mylon;
 let mypos;
-//개발자 추천
+//개발자 추천 메뉴
 let restaurant = {
   한식: [
     "사나이뚝배기",
@@ -97,18 +97,16 @@ let mapContainer = document.getElementById("map"),
     level: 3, // 지도의 확대 레벨
   };
 
-// 지도를 생성
+// 지도 생성
 let map = new kakao.maps.Map(mapContainer, mapOption);
 
 // 장소 검색 객체
 let ps = new kakao.maps.services.Places();
 
-// 검색 결과 목록이나 마커를 클릭했을 때 장소명을 표출할 인포윈도우를 생성합니다
-let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 // 커스텀 오버레이
 let customOverlay = new kakao.maps.CustomOverlay(null);
 let triOverlay = new kakao.maps.CustomOverlay(null);
-//랜덤 장소 요청
+//랜덤 맛집 요청
 function ranPlace(event) {
   let keyword;
   let id = event.target.id;
@@ -148,6 +146,7 @@ function ranPlace(event) {
   keyword += "공릉";
   ps.keywordSearch(keyword, placesSearchRD, searchOption);
 }
+//랜덤 맛집 콜백
 function placesSearchRD(data, status, pagination) {
   if (status === kakao.maps.services.Status.OK) {
     // 정상적으로 검색이 완료됐으면
@@ -196,8 +195,10 @@ function displayRdPlaces(places) {
     // 마커와 검색결과 항목에 mouseover 했을때
     // 해당 장소에 인포윈도우에 장소명을 표시합니다
     // mouseout 했을 때는 인포윈도우를 닫습니다
+    //click시에 인포윈도우를 엽니다
     (function (marker, title, places, map) {
       kakao.maps.event.addListener(marker, "click", function () {
+        closeOverlay();
         displayCustomOverlay(marker, title, places);
       });
 
@@ -265,6 +266,10 @@ function displayPlaces(places) {
   // 지도에 표시되고 있는 마커를 제거합니다
   removeMarker();
 
+  //커스텀 오버레이를 제거
+  customOverlay.setMap(null);
+  triOverlay.setMap(null);
+
   for (let i = 0; i < places.length; i++) {
     // 마커를 생성하고 지도에 표시합니다
     let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
@@ -281,6 +286,7 @@ function displayPlaces(places) {
     // mouseout 했을 때는 인포윈도우를 닫습니다
     (function (marker, title, places) {
       kakao.maps.event.addListener(marker, "click", function () {
+        closeOverlay();
         displayCustomOverlay(marker, title, places);
       });
 
@@ -311,7 +317,7 @@ function getListItem(index, places) {
       '<span class="markerbg marker_' +
       (index + 1) +
       '">' +
-      (index + 1) +
+      '<span class="material-symbols-outlined">location_on</span>' +
       "</span>" +
       '<div class="info">' +
       "   <h5>" +
@@ -329,8 +335,9 @@ function getListItem(index, places) {
   } else {
     itemStr += "    <span>" + places.address_name + "</span>";
   }
-
-  itemStr += '  <span class="tel">' + places.phone + "</span>";
+  if (places.phone === "")
+    itemStr += '  <span class="tel">전화번호 없음</span>';
+  else itemStr += '  <span class="tel">' + places.phone + "</span>";
 
   itemStr +=
     "   <span class='url'>" +
@@ -352,11 +359,9 @@ function getListItem(index, places) {
 
 // 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
 function addMarker(position, idx, title) {
-  let imageSrc = "https://ifh.cc/g/w72QOf.png", // 마커 이미지 url, 스프라이트 이미지를 씁니다
+  let imageSrc = "https://ifh.cc/g/w72QOf.png", // 마커 이미지 url
     imageSize = new kakao.maps.Size(31, 35), // 마커 이미지의 크기
     imgOptions = {
-      // spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-      // spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
       offset: new kakao.maps.Point(16, 34), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
     },
     markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
@@ -410,44 +415,11 @@ function displayPagination(pagination) {
   paginationEl.appendChild(fragment);
 }
 
-// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
-// 인포윈도우에 장소명을 표시합니다
-// function displayInfowindow(marker, title, places) {
-//   let el = document.createElement("div");
-//   let content =
-//     '<div style="z-index:20;">' + '<a href="">' + title + "</a>" + "</div>";
-//   if (places.road_address_name) {
-//     content +=
-//       "    <div class='road_name'>" + places.road_address_name + "</div>";
-//   } else {
-//     content += "    <div class='road_name'>" + places.address_name + "</div>";
-//   }
-
-//   content += '  <div class="tel">' + places.phone + "</div>";
-
-//   content +=
-//     "   <div class='url'>" +
-//     "<a href=" +
-//     "'" +
-//     places.place_url +
-//     "'" +
-//     " target='_blank'" +
-//     ">" +
-//     "상세정보" +
-//     "</a>" +
-//     "</div>" +
-//     "</div>";
-//   el.innerHTML = content;
-//   el.id = "info_win";
-
-//   infowindow.setContent(el);
-//   infowindow.open(map, marker);
-// }
+//커스텀 오버레이 표시
 function displayCustomOverlay(marker, title, places) {
   let el = document.createElement("div");
   let cus_cont = document.createElement("div");
   let cus_logo = document.createElement("div");
-  let tri_overlay;
   let tri = document.createElement("div");
   el.append(cus_cont, cus_logo);
   let content = "<div id='title'>" + title + "</div>";
@@ -479,6 +451,7 @@ function displayCustomOverlay(marker, title, places) {
   cus_logo.innerHTML =
     '<span class="material-symbols-outlined" onclick="closeOverlay()">restaurant</span>';
   tri.id = "tri";
+  //커스텀 오버레이 창
   customOverlay = new kakao.maps.CustomOverlay({
     map: map,
     position: marker.getPosition(),
@@ -486,6 +459,7 @@ function displayCustomOverlay(marker, title, places) {
     xAnchor: 0.5,
     yAnchor: 1,
   });
+
   triOverlay = new kakao.maps.CustomOverlay({
     map: map,
     position: marker.getPosition(),
@@ -521,6 +495,7 @@ btn_dis.addEventListener("click", function a() {
   searchPlaces();
 });
 
+//랜덤 맛집 이벤트 실행
 let btn_ko = document.getElementById("btn_ko");
 btn_ko.addEventListener("click", ranPlace);
 
@@ -539,6 +514,7 @@ btn_ttk.addEventListener("click", ranPlace);
 let btn_meat = document.getElementById("btn_meat");
 btn_meat.addEventListener("click", ranPlace);
 
+//커스텀 오버레이 닫기
 function closeOverlay() {
   customOverlay.setMap(null);
   triOverlay.setMap(null);
