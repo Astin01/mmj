@@ -3,7 +3,7 @@ let mylat, mylon;
 let mypos;
 //개발자 추천 메뉴
 let restaurant = {
-  한식: [
+  btn_ko: [
     "사나이뚝배기",
     "소문날라",
     "홍가부대찌개",
@@ -29,13 +29,13 @@ let restaurant = {
     "비젼식당",
     "원조강영숙봉평메밀촌",
   ],
-  양식: [
+  btn_eu: [
     "핏짜굽는언니",
     "리틀파스타",
     "오늘의파스타",
     "오렌지몽키파스타",
-    "피자마루 ",
-    "피자스쿨 ",
+    "피자마루",
+    "피자스쿨",
     "맛닭꼬",
     "호치킨",
     "버거투버거",
@@ -44,7 +44,7 @@ let restaurant = {
     "서오롱피자",
     "오븐에빠진닭",
   ],
-  일식: [
+  btn_jp: [
     "기린",
     "스시쟁이",
     "도쿄식탁",
@@ -53,9 +53,9 @@ let restaurant = {
     "경성초밥",
     "로지스시",
   ],
-  분식: ["동대문엽기떡볶이", "쪼매", "멍텅구리"],
-  고기집: ["세겹", "궁안뜰", "찬이네곱창", "화로상회", "서울껍데기"],
-  중식: ["왕짜장", "뽕신"],
+  btn_ttk: ["동대문엽기떡볶이", "쪼매", "멍텅구리"],
+  btn_meat: ["세겹", "궁안뜰", "찬이네곱창", "화로상회", "서울껍데기"],
+  btn_ch: ["왕짜장", "뽕신"],
 };
 
 //위치 정보 반환
@@ -117,32 +117,9 @@ function ranPlace(event) {
   btn_meat.style.backgroundColor = "#ffa356";
   btn_ttk.style.backgroundColor = "#ffa356";
   document.getElementById(id).style.backgroundColor = "#d86200";
-  switch (id) {
-    case "btn_ko":
-      keyword =
-        restaurant.한식[Math.floor(Math.random() * restaurant.한식.length)];
-      break;
-    case "btn_jp":
-      keyword =
-        restaurant.일식[Math.floor(Math.random() * restaurant.일식.length)];
-      break;
-    case "btn_ch":
-      keyword =
-        restaurant.중식[Math.floor(Math.random() * restaurant.중식.length)];
-      break;
-    case "btn_eu":
-      keyword =
-        restaurant.양식[Math.floor(Math.random() * restaurant.양식.length)];
-      break;
-    case "btn_ttk":
-      keyword =
-        restaurant.분식[Math.floor(Math.random() * restaurant.분식.length)];
-      break;
-    case "btn_meat":
-      keyword =
-        restaurant.고기집[Math.floor(Math.random() * restaurant.고기집.length)];
-      break;
-  }
+  let len = restaurant[id].length;
+  let ran = Math.floor(Math.random() * len);
+  keyword = restaurant[id][ran];
   keyword += "공릉";
   ps.keywordSearch(keyword, placesSearchRD, searchOption);
 }
