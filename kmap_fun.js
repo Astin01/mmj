@@ -106,16 +106,15 @@ let ps = new kakao.maps.services.Places();
 // 커스텀 오버레이
 let customOverlay = new kakao.maps.CustomOverlay(null);
 let triOverlay = new kakao.maps.CustomOverlay(null);
+
 //랜덤 맛집 요청
 function ranPlace(event) {
   let keyword;
+
+  buttonColorReset();
+
   let id = event.target.id;
-  btn_ko.style.backgroundColor = "#ffa356";
-  btn_jp.style.backgroundColor = "#ffa356";
-  btn_ch.style.backgroundColor = "#ffa356";
-  btn_eu.style.backgroundColor = "#ffa356";
-  btn_meat.style.backgroundColor = "#ffa356";
-  btn_ttk.style.backgroundColor = "#ffa356";
+
   document.getElementById(id).style.backgroundColor = "#d86200";
   let len = restaurant[id].length;
   let ran = Math.floor(Math.random() * len);
@@ -145,9 +144,6 @@ function displayRdPlaces(places) {
     listStr = "",
     paginationEl = document.getElementById("pagination");
 
-  customOverlay.setMap(null);
-  triOverlay.setMap(null);
-
   while (paginationEl.hasChildNodes()) {
     paginationEl.removeChild(paginationEl.lastChild);
   }
@@ -157,6 +153,13 @@ function displayRdPlaces(places) {
 
   // 지도에 표시되고 있는 마커를 제거합니다
   removeMarker();
+
+  //커스텀 오버레이 제거
+  let content = document.getElementById("info_win");
+  let triContent = document.getElementById("tri");
+  if (content && triContent) {
+    deleteOverlay(content, triContent);
+  }
 
   for (let i = 0; i < 1; i++) {
     // 마커를 생성하고 지도에 표시합니다
@@ -168,11 +171,11 @@ function displayRdPlaces(places) {
     // LatLngBounds 객체에 좌표를 추가합니다
 
     bounds.extend(placePosition);
-
+    // click시에 커스텀 오버레이를 엽니다
     // 마커와 검색결과 항목에 mouseover 했을때
-    // 해당 장소에 인포윈도우에 장소명을 표시합니다
-    // mouseout 했을 때는 인포윈도우를 닫습니다
-    //click시에 인포윈도우를 엽니다
+    // 해당 장소에 커스텀 오버레이를 표시합니다
+    // mouseout 했을 때는 커스텀 오버레이를 닫습니다
+
     (function (marker, title, places, map) {
       kakao.maps.event.addListener(marker, "click", function () {
         closeOverlay();
@@ -200,13 +203,19 @@ function displayRdPlaces(places) {
 }
 
 // 키워드 검색을 요청하는 함수입니다
-function searchPlaces() {
+function searchPlaces(buttonId) {
   let keyword = document.getElementById("keyword").value;
 
   if (!keyword.replace(/^\s+|\s+$/g, "")) {
     return false;
   }
 
+  //버튼 컬러 리셋
+  buttonColorReset();
+  //버튼 컬러 부여
+  if (buttonId) {
+    buttonId.style.backgroundColor = "#d86200";
+  }
   // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
   ps.keywordSearch(keyword, placesSearchCB, searchOption);
 }
@@ -235,7 +244,8 @@ function displayPlaces(places) {
     menuEl = document.getElementById("menu_wrap"),
     fragment = document.createDocumentFragment(),
     bounds = new kakao.maps.LatLngBounds(),
-    listStr = "";
+    listStr = "",
+    len = places.length;
 
   // 검색 결과 목록에 추가된 항목들을 제거합니다
   removeAllChildNods(listEl);
@@ -243,11 +253,14 @@ function displayPlaces(places) {
   // 지도에 표시되고 있는 마커를 제거합니다
   removeMarker();
 
-  //커스텀 오버레이를 제거
-  customOverlay.setMap(null);
-  triOverlay.setMap(null);
+  //커스텀 오버레이 제거
+  let content = document.getElementById("info_win");
+  let triContent = document.getElementById("tri");
+  if (content && triContent) {
+    deleteOverlay(content, triContent);
+  }
 
-  for (let i = 0; i < places.length; i++) {
+  for (let i = 0; i < len; i++) {
     // 마커를 생성하고 지도에 표시합니다
     let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
       marker = addMarker(placePosition, i),
@@ -459,40 +472,37 @@ function removeAllChildNods(el) {
 let btn_acc = document.getElementById("btn_acc");
 btn_acc.addEventListener("click", function a() {
   searchOption.sort = kakao.maps.services.SortBy.ACCURACY;
-  btn_dis.style.backgroundColor = "#ffa356";
-  btn_acc.style.backgroundColor = "#d86200";
-  searchPlaces();
+  searchPlaces(btn_acc);
+  // btn_acc.style.backgroundColor = "#d86200";
 });
 
 let btn_dis = document.getElementById("btn_dis");
 btn_dis.addEventListener("click", function a() {
   searchOption.sort = kakao.maps.services.SortBy.DISTANCE;
-  btn_acc.style.backgroundColor = "#ffa356";
-  btn_dis.style.backgroundColor = "#d86200";
-  searchPlaces();
+  searchPlaces(btn_dis);
 });
 
 //랜덤 맛집 이벤트 실행
-let btn_ko = document.getElementById("btn_ko");
-btn_ko.addEventListener("click", ranPlace);
-
-let btn_jp = document.getElementById("btn_jp");
-btn_jp.addEventListener("click", ranPlace);
-
-let btn_ch = document.getElementById("btn_ch");
-btn_ch.addEventListener("click", ranPlace);
-
-let btn_eu = document.getElementById("btn_eu");
-btn_eu.addEventListener("click", ranPlace);
-
-let btn_ttk = document.getElementById("btn_ttk");
-btn_ttk.addEventListener("click", ranPlace);
-
-let btn_meat = document.getElementById("btn_meat");
-btn_meat.addEventListener("click", ranPlace);
+let ran_btt = document.querySelectorAll("#ran_btt button");
+ran_btt.forEach((btn) => {
+  btn.addEventListener("click", ranPlace);
+});
 
 //커스텀 오버레이 닫기
 function closeOverlay() {
   customOverlay.setMap(null);
   triOverlay.setMap(null);
+}
+
+function deleteOverlay(content, triContent) {
+  content.remove();
+  triContent.remove();
+}
+
+function buttonColorReset() {
+  const button = document.getElementsByTagName("button");
+  const btn_len = button.length;
+  for (let i = 0; i < btn_len; i++) {
+    button[i].style.backgroundColor = "#ffa356";
+  }
 }
