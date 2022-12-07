@@ -2,7 +2,7 @@
 
 <img src="img/mmj.png" width="50px" height="50px"></img>
 
-[뭐먹지][mmj]
+[공릉동 맛집 추천 사이트 MMJ][mmj]
 
 [mmj]: https://mmji.netlify.app
 
@@ -10,7 +10,7 @@
 
 - 공릉동에 존재하는 음식점들을 검색하고 추천하는 웹사이트
 
-<img src="img/posA.png" width="200px" height="100px"></img>
+<img src="img/posA.png" width="800px" height="500px"></img>
 
 ## 기능
 
@@ -24,19 +24,19 @@
 
 - 위치 허용(허용하지 않을 시 검색기능이 정확하게 작동하지 않음)
 
-<img src="img/posB.png" width="200px" height="100px"></img>
+<img src="img/posB.png" width="800px" height="500px"></img>
 
 ### 검색
 
 - 원하는 음식점이나 음식을 검색(우측상단의 버튼을 누르면 정확도,거리순으로 목록이 정렬)
 
-<img src="img/search.png" width="200px" height="100px"></img>
+<img src="img/search.png" width="800px" height="500px"></img>
 
 ### 랜덤 맛집 추천
 
 - 원하는 카테고리의 버튼을 누르면 랜덤하게 카테고리의 맛집을 표시
 
-<img src="img/random.png" width="200px" height="100px"></img>
+<img src="img/random.png" width="800px" height="500px"></img>
 
 ### 조작
 
@@ -44,7 +44,7 @@
 
 - 지도의 마커를 클릭하면 음식점 정보 표시, 정보창 우측의 음식점 마크를 클릭하면 마커 제거
 
-<img src="img/overlay.png" width="200px" height="100px"></img>
+<img src="img/overlay.png" width="800px" height="100px"></img>
 
 ## 참고
 
