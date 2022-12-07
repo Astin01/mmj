@@ -44,21 +44,26 @@
 
 - 지도의 마커를 클릭하면 음식점 정보 표시, 정보창 우측의 음식점 마크를 클릭하면 마커 제거
 
-<img src="img/overlay.png" width="800px" height="100px"></img>
+<img src="img/overlay.png" width="800px" height="500px"></img>
 
 ## 참고
 
 - [markdown작성법 참조][marklink]
-  [marklink]:https://gist.github.com/ihoneymon/652be052a0727ad59601
+
+  [marklink]: https://gist.github.com/ihoneymon/652be052a0727ad59601
 
 - [실시간위치 코드참조][marklink]
-  [marklink]:https://7942yongdae.tistory.com/150
+
+  [marklink]: https://7942yongdae.tistory.com/150
 
 - [카카오api문서 참조][marklink]
-  [marklink]:https://apis.map.kakao.com/web/documentation/
+
+  [marklink]: https://apis.map.kakao.com/web/documentation/
 
 - [장소검색 라이브러리 코드 참조][marklink]
-  [marklink]:https://7942yongdae.tistory.com/150
+
+  [marklink]: https://7942yongdae.tistory.com/150
 
 - [커스텀 오버레이 코드 참조][marklink]
-  [marklink]:https://apis.map.kakao.com/web/sample/removableCustomOverlay/
+
+  [marklink]: https://apis.map.kakao.com/web/sample/removableCustomOverlay/
