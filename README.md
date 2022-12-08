@@ -67,3 +67,13 @@
 - [커스텀 오버레이 코드 참조][marklink]
 
   [marklink]: https://apis.map.kakao.com/web/sample/removableCustomOverlay/
+
+## 사용기술
+
+- html,css,js
+
+- kakaomap api
+
+## Licese
+
+This project is licensed under the MIT License

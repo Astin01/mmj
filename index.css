@@ -307,10 +307,10 @@ body {
   display: flex;
   position: relative;
   bottom: 75px;
-  /* width: 240px; */
   height: 120px;
   background-color: white;
   z-index: 1;
+  border-radius: 3px 0px 0px 3px;
 }
 #info_win .cus_cont {
   display: flex;
@@ -338,6 +338,7 @@ body {
   justify-content: center;
   align-items: center;
   background-color: #ffa356;
+  border-radius: 0px 3px 3px 0px;
 }
 #cus_logo .material-symbols-outlined {
   font-size: 70px;
