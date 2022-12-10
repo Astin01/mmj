@@ -365,7 +365,7 @@ body {
 #btn_jp:hover,
 #btn_ko:hover,
 #btn_meat:hover,
-#btn_ttk:hover {
+#btn_caf:hover {
   cursor: pointer;
 }
 #btn_acc:focus,
@@ -375,7 +375,7 @@ body {
 #btn_jp:focus,
 #btn_ko:focus,
 #btn_meat:focus,
-#btn_ttk:focus {
+#btn_caf:focus {
   border: none;
   outline: none;
 }

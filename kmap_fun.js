@@ -22,12 +22,11 @@ let restaurant = {
     "마인하우스",
     "수돈재",
     "굴다리전주",
-    "밥은",
+    "밥은화",
     "온달네",
     "숲속왕돈까스",
     "비젼식당",
     "원조강영숙봉평메밀촌",
-    "쭈꾸미도사",
     "서울감자탕",
     "참맛감자탕",
     "오늘손칼국수앤찜",
@@ -39,14 +38,14 @@ let restaurant = {
     "리틀파스타",
     "오늘의파스타",
     "오렌지몽키파스타",
-    "피자마루",
-    "피자스쿨",
+    // "피자마루",
+    // "피자스쿨",
     "맛닭꼬",
     "호치킨",
     "버거투버거",
-    "플렉스",
-    "루이스버거",
-    "서오롱피자",
+    // "플렉스",
+    // "루이스버거",
+    "서오릉피자",
     "오븐에빠진닭",
     "알러이",
   ],
@@ -59,7 +58,7 @@ let restaurant = {
     "경성초밥",
     "로지스시",
   ],
-  btn_caffe: [
+  btn_caf: [
     "협동문토스트",
     "공차",
     "쥬씨&차얌",
@@ -115,8 +114,8 @@ function success({ coords }) {
   searchOption = {
     location: mypos,
     radius: 10000,
-    category_group_code: "FD6",
-    sort: kakao.maps.services.SortBy.ACCURACY,
+    // category_group_code: "FD6",
+    // sort: kakao.maps.services.SortBy.ACCURACY,
   };
 }
 
@@ -161,12 +160,24 @@ function ranPlace(event) {
 
   let id = event.target.id;
 
+  searchOption = {
+    location: mypos,
+    radius: 10000,
+    category_group_code: null,
+    sort: kakao.maps.services.SortBy.ACCURACY,
+  };
+
   document.getElementById(id).style.backgroundColor = "#d86200";
   let len = restaurant[id].length;
-  let ran = Math.floor(Math.random() * len);
-  keyword = restaurant[id][ran];
-  keyword += "공릉";
-  ps.keywordSearch(keyword, placesSearchRD, searchOption);
+  if (len == 0) {
+    return alert("더이상 결과값을 불러올 수 없습니다");
+  } else {
+    let ran = Math.floor(Math.random() * len);
+    keyword = restaurant[id][ran];
+    keyword += " 공릉";
+    restaurant[id].splice(ran, 1);
+    ps.keywordSearch(keyword, placesSearchRD, searchOption);
+  }
 }
 //랜덤 맛집 콜백
 function placesSearchRD(data, status, pagination) {
@@ -251,6 +262,13 @@ function displayRdPlaces(places) {
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces(buttonId) {
   let keyword = document.getElementById("keyword").value;
+
+  searchOption = {
+    location: mypos,
+    radius: 10000,
+    category_group_code: "FD6",
+    sort: kakao.maps.services.SortBy.ACCURACY,
+  };
 
   if (!keyword.replace(/^\s+|\s+$/g, "")) {
     return false;
