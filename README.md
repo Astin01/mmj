@@ -14,11 +14,15 @@
 
 ## 기능
 
-- 위치기반으로 사용자 근처 1km내의 음식점,음식 을 정확도,거리순으로 검색
+- 위치기반으로 사용자 근처 10km내의 음식점,음식 을 정확도,거리순으로 검색
 
 - 공릉동에 존재하는 음식점들을 한식,일식,중식/분식,양식,후식 카테고리별로 랜덤하게 추천
 
+- 중복 추천 방지(새로고침 시 리셋)(추천 항목이 더이상 없을 시 경고창으로 작동 방지)
+
 ## 사용
+
+## 웹
 
 ### 사전준비
 
@@ -46,6 +50,32 @@
 
 <img src="img/overlay.png" width="800px" height="500px"></img>
 
+## 모바일
+
+## 사전준비
+
+- 모바일 상단에 위치정보 허용
+
+<img src="img/mobile4.jpg" width="800px" height="500px"></img>
+
+### 검색
+
+- 원하는 음식점이나 음식을 검색(우측상단의 버튼을 누르면 정확도,거리순으로 목록이 정렬)
+
+<img src="img/mobile3.jpg" width="800px" height="500px"></img>
+
+### 랜덤 맛집 추천
+
+- 원하는 카테고리의 버튼을 누르면 랜덤하게 카테고리의 맛집을 표시
+
+<img src="img/mobile2.jpg" width="800px" height="500px"></img>
+
+### 조작
+
+- 지도의 마커를 클릭하면 음식점 정보 표시, 정보창 우측의 음식점 마크를 클릭하면 마커 제거
+
+<img src="img/mobile5.jpg" width="800px" height="500px"></img>
+
 ## 참고
 
 - [markdown작성법 참조][marklink]
@@ -70,10 +100,10 @@
 
 ## 사용기술
 
-- html,css,js
+- HTML CSS JAVASCIRPT
 
-- kakaomap api
+- Kakaomap API
 
 ## Licese
 
-This project is licensed under the MIT License
+MIT License
