@@ -114,8 +114,6 @@ function success({ coords }) {
   searchOption = {
     location: mypos,
     radius: 10000,
-    // category_group_code: "FD6",
-    // sort: kakao.maps.services.SortBy.ACCURACY,
   };
 }
 
@@ -218,6 +216,10 @@ function displayRdPlaces(places) {
     deleteOverlay(content, triContent);
   }
 
+  //값 제거
+  let input = document.getElementById("keyword");
+  input.value = "";
+
   for (let i = 0; i < 1; i++) {
     // 마커를 생성하고 지도에 표시합니다
     let placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
@@ -268,12 +270,23 @@ function displayRdPlaces(places) {
 function searchPlaces(buttonId) {
   let keyword = document.getElementById("keyword").value;
 
-  searchOption = {
-    location: mypos,
-    radius: 10000,
-    category_group_code: "FD6",
-    sort: kakao.maps.services.SortBy.ACCURACY,
-  };
+  if (buttonId) {
+    if (buttonId.id == "btn_dis") {
+      searchOption = {
+        location: mypos,
+        radius: 10000,
+        category_group_code: "FD6",
+        sort: kakao.maps.services.SortBy.DISTANCE,
+      };
+    }
+  } else {
+    searchOption = {
+      location: mypos,
+      radius: 10000,
+      category_group_code: "FD6",
+      sort: kakao.maps.services.SortBy.ACCURACY,
+    };
+  }
 
   if (!keyword.replace(/^\s+|\s+$/g, "")) {
     return false;
