@@ -56,25 +56,25 @@
 
 - 모바일 상단에 위치정보 허용
 
-<img src="img/mobile4.jpg" width="800px" height="500px"></img>
+<img src="img/mobile4.jpg" width="350px" height="650px"></img>
 
 ### 검색
 
 - 원하는 음식점이나 음식을 검색(우측상단의 버튼을 누르면 정확도,거리순으로 목록이 정렬)
 
-<img src="img/mobile3.jpg" width="800px" height="500px"></img>
+<img src="img/mobile3.jpg" width="350px" height="650px"></img>
 
 ### 랜덤 맛집 추천
 
 - 원하는 카테고리의 버튼을 누르면 랜덤하게 카테고리의 맛집을 표시
 
-<img src="img/mobile2.jpg" width="800px" height="500px"></img>
+<img src="img/mobile2.jpg" width="350px" height="650px"></img>
 
 ### 조작
 
 - 지도의 마커를 클릭하면 음식점 정보 표시, 정보창 우측의 음식점 마크를 클릭하면 마커 제거
 
-<img src="img/mobile5.jpg" width="800px" height="500px"></img>
+<img src="img/mobile5.jpg" width="350px" height="650px"></img>
 
 ## 참고
 
