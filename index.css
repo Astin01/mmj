@@ -164,7 +164,6 @@ body {
   }
   #placesList,
   #pagination {
-    /* visibility: hidden; */
     display: none;
   }
 
@@ -191,10 +190,6 @@ body {
   #menu_wrap #keyword {
     width: 385px !important;
   }
-  #placesList,
-  #pagination {
-    visibility: hidden;
-  }
 
   #ran_btt {
     padding-top: 2px;
@@ -217,10 +212,6 @@ body {
   }
   #menu_wrap #keyword {
     width: 650px !important;
-  }
-  #placesList,
-  #pagination {
-    visibility: hidden;
   }
 
   #ran_btt {

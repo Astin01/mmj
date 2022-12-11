@@ -233,20 +233,25 @@ function displayRdPlaces(places) {
     // 해당 장소에 커스텀 오버레이를 표시합니다
     // mouseout 했을 때는 커스텀 오버레이를 닫습니다
 
-    (function (marker, title, places, map) {
+    (function (marker, places) {
+      // addEventListener("load", displayCustomOverlay(marker, places));
+
       kakao.maps.event.addListener(marker, "click", function () {
         closeOverlay();
-        displayCustomOverlay(marker, title, places);
+        displayCustomOverlay(marker, places);
       });
 
       itemEl.onmouseover = function () {
-        displayCustomOverlay(marker, title, places);
+        displayCustomOverlay(marker, places);
       };
 
       itemEl.onmouseout = function () {
         closeOverlay();
       };
-    })(marker, places[i].place_name, places[i], map, placePosition);
+    })(marker, places[i]);
+
+    const form = document.getElementById("keyword");
+    form.placeholder = places[i].place_name;
 
     fragment.appendChild(itemEl);
   }
@@ -323,6 +328,9 @@ function displayPlaces(places) {
   if (content && triContent) {
     deleteOverlay(content, triContent);
   }
+  //
+  const form = document.getElementById("keyword");
+  form.placeholder = " 음식, 음식점 검색";
 
   for (let i = 0; i < len; i++) {
     // 마커를 생성하고 지도에 표시합니다
@@ -338,20 +346,20 @@ function displayPlaces(places) {
     // 마커와 검색결과 항목에 mouseover 했을때
     // 해당 장소에 인포윈도우에 장소명을 표시합니다
     // mouseout 했을 때는 인포윈도우를 닫습니다
-    (function (marker, title, places) {
+    (function (marker, places) {
       kakao.maps.event.addListener(marker, "click", function () {
         closeOverlay();
-        displayCustomOverlay(marker, title, places);
+        displayCustomOverlay(marker, places);
       });
 
       itemEl.onmouseover = function () {
-        displayCustomOverlay(marker, title, places);
+        displayCustomOverlay(marker, places);
       };
 
       itemEl.onmouseout = function () {
         closeOverlay();
       };
-    })(marker, places[i].place_name, places[i]);
+    })(marker, places[i]);
 
     fragment.appendChild(itemEl);
   }
@@ -470,13 +478,13 @@ function displayPagination(pagination) {
 }
 
 //커스텀 오버레이 표시
-function displayCustomOverlay(marker, title, places) {
+function displayCustomOverlay(marker, places) {
   let el = document.createElement("div");
   let cus_cont = document.createElement("div");
   let cus_logo = document.createElement("div");
   let tri = document.createElement("div");
   el.append(cus_cont, cus_logo);
-  let content = "<div id='title'>" + title + "</div>";
+  let content = "<div id='title'>" + places.place_name + "</div>";
   if (places.road_address_name) {
     content +=
       "    <div class='road_name'>" + places.road_address_name + "</div>";
