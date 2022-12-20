@@ -1,0 +1,15 @@
+#logo_bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+#logo_bar div {
+  display: flex;
+  align-items: center;
+}
+
+.option #logo {
+  padding-left: 17px;
+  font-size: 20px;
+  padding-bottom: 5px;
+}

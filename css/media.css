@@ -1,0 +1,74 @@
+@media (min-width: 320px) and (max-width: 400px) {
+  #menu_wrap {
+    width: 100vw;
+    height: 113px;
+    overflow-y: hidden;
+    margin: 0;
+  }
+  #menu_wrap #keyword {
+    width: 345px !important;
+  }
+  #placesList,
+  #pagination {
+    display: none;
+  }
+
+  #ran_btt {
+    padding-top: 2px;
+    padding-bottom: 0;
+  }
+  #ran_btt button,
+  .option button {
+    padding: 0;
+  }
+  .option {
+    padding: 2px !important;
+  }
+}
+
+@media (min-width: 401px) and (max-width: 480px) {
+  #menu_wrap {
+    width: 100vw;
+    height: 113px;
+    overflow-y: hidden;
+    margin: 0;
+  }
+  #menu_wrap #keyword {
+    width: 385px !important;
+  }
+
+  #ran_btt {
+    padding-top: 2px;
+    padding-bottom: 0;
+  }
+  #ran_btt button,
+  .option button {
+    padding: 0;
+  }
+  .option {
+    padding: 2px !important;
+  }
+}
+@media (min-width: 660px) and (max-width: 770px) {
+  #menu_wrap {
+    width: 100vw;
+    height: 113px;
+    overflow-y: hidden;
+    margin: 0;
+  }
+  #menu_wrap #keyword {
+    width: 650px !important;
+  }
+
+  #ran_btt {
+    padding-top: 2px;
+    padding-bottom: 0;
+  }
+  #ran_btt button,
+  .option button {
+    padding: 0;
+  }
+  .option {
+    padding: 2px !important;
+  }
+}

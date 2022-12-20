@@ -1,0 +1,55 @@
+#info_win #cus_logo {
+  display: flex;
+  flex: auto;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffa356;
+  border-radius: 0px 3px 3px 0px;
+}
+#cus_logo .material-symbols-outlined {
+  font-size: 70px;
+  color: white;
+  font-variation-settings: "FILL" 0, "wght" 600, "GRAD" 0, "opsz" 48;
+}
+#tri {
+  position: relative;
+  bottom: 35px;
+  width: 0;
+  height: 0;
+  border-bottom: 40px solid transparent;
+  border-top: 40px solid transparent;
+  border-left: 30px solid white;
+  border-right: 50px solid transparent;
+  z-index: 2;
+  transform: rotate(5deg);
+}
+
+#info_win {
+  display: flex;
+  position: relative;
+  bottom: 75px;
+  height: 120px;
+  background-color: white;
+  z-index: 1;
+  border-radius: 3px 0px 0px 3px;
+}
+#info_win .cus_cont {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-left: 10px;
+  padding-right: 10px;
+  white-space: nowrap;
+}
+#info_win #title {
+  font-size: 18px;
+}
+#info_win .tel,
+#placesList .tel {
+  color: #4d8876;
+}
+#info_win .url a,
+#placesList .url a {
+  color: #3b5fba;
+}

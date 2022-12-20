@@ -1,0 +1,53 @@
+.option #ran_btt {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 10px;
+  padding-bottom: 3px;
+}
+.option #ran_btt > button {
+  color: white;
+  background-color: #ffa356;
+  border: none;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 3px;
+  border-color: transparent;
+}
+
+.option #logo,
+#btn_acc,
+#btn_dis {
+  color: white;
+  background-color: #ffa356;
+  border: none;
+  text-decoration: none;
+}
+#btn_acc,
+#btn_dis {
+  padding: 5px;
+  border-radius: 3px;
+  padding-top: 3px;
+  border-color: transparent;
+}
+
+#btn_acc:hover,
+#btn_dis:hover,
+#btn_ch:hover,
+#btn_eu:hover,
+#btn_jp:hover,
+#btn_ko:hover,
+#btn_meat:hover,
+#btn_caf:hover {
+  cursor: pointer;
+}
+#btn_acc:focus,
+#btn_dis:focus,
+#btn_ch:focus,
+#btn_eu:focus,
+#btn_jp:focus,
+#btn_ko:focus,
+#btn_meat:focus,
+#btn_caf:focus {
+  border: none;
+  outline: none;
+}

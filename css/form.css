@@ -1,0 +1,11 @@
+.option form {
+  text-align: center;
+}
+
+#menu_wrap #keyword {
+  border-radius: 3px;
+  border-color: transparent;
+  width: 220px;
+  height: 25px;
+  outline: none;
+}
